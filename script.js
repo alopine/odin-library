@@ -30,28 +30,36 @@ function addBookToLibrary() {
     }
 
     let index = myLibrary.length - 1;
-    displayBooks(index, myLibrary[index]);
+    displayBook(index, myLibrary[index]);
 }
 
-function displayBooks(index, book) {
-    // Create row and cell elements
-    const tr = document.createElement("tr");
+function displayBook(index, book) {
+    // Add row to table
+    const tr = libraryTable.insertRow(index);
 
-    // Set row data attribute
-    tr.setAttribute("data-bookID", index);
-
-    // Iterate over keys in book
+    // Add cell for each key in book
     Object.keys(book).forEach (key => {
-        const td = document.createElement("td");
+        const td = tr.insertCell(-1);
         td.textContent = book[key];
-        tr.appendChild(td);
     });
 
-    // Add row to table
-    libraryTable.appendChild(tr);
+    // Add delete button
+    const btn = document.createElement("button");
+    const td = tr.insertCell(-1);
+    btn.textContent = "Delete";
+    btn.setAttribute("data-bookID", index);
+    btn.addEventListener("click", deleteBook);
+    td.appendChild(btn);
 }
 
+function deleteBook(evt) {
+    // Remove row in table
+    const bookNum = evt.currentTarget.getAttribute("data-bookID");
+    libraryTable.deleteRow(bookNum);
 
+    // Remove from array
+    myLibrary.splice(bookNum, 1);
+}
 
 // Event listeners
 
@@ -60,12 +68,8 @@ window.onload = () => {
 
     // Populate initial library from array
     for (const [index, book] of myLibrary.entries()) {
-        displayBooks(index, book);
+        displayBook(index, book);
     }
 };
 
-inputSubmit.addEventListener("click", () => {
-    addBookToLibrary();
-});
-
-
+inputSubmit.addEventListener("click", addBookToLibrary);
