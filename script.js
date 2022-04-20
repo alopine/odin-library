@@ -1,6 +1,14 @@
 // Initialize variables
 let myLibrary = [];
 
+// Select page elements
+const inputTitle = document.querySelector("#title");
+const inputAuthor = document.querySelector("#author");
+const inputPages = document.querySelector("#pages");
+const inputRead = document.querySelector("#read");
+const inputSubmit = document.querySelector("#submit");
+const libraryTable = document.querySelector("#libraryTable");
+
 function Book(title, author, pages, read) {
 	this.title = title
 	this.author = author
@@ -9,7 +17,7 @@ function Book(title, author, pages, read) {
 }
 
 Book.prototype.info = function() {
-    return(`${this.title} by ${this.author}, ${this.pages} pages, ${this.read ? "read" : "not read"}`)
+    return(`${this.title} by ${this.author}, ${this.pages} pages, ${this.read}`)
 }
 
 function addBookToLibrary() {
@@ -20,17 +28,44 @@ function addBookToLibrary() {
         window.alert("Please ensure all fields are filled out!");
         return;
     }
+
+    let index = myLibrary.length - 1;
+    displayBooks(index, myLibrary[index]);
+}
+
+function displayBooks(index, book) {
+    // Create row and cell elements
+    const tr = document.createElement("tr");
+
+    // Set row data attribute
+    tr.setAttribute("data-bookID", index);
+
+    // Iterate over keys in book
+    Object.keys(book).forEach (key => {
+        const td = document.createElement("td");
+        td.textContent = book[key];
+        tr.appendChild(td);
+    });
+
+    // Add row to table
+    libraryTable.appendChild(tr);
 }
 
 
-// Select page elements
-const inputTitle = document.querySelector("#title");
-const inputAuthor = document.querySelector("#author");
-const inputPages = document.querySelector("#pages");
-const inputRead = document.querySelector("#read");
-const inputSubmit = document.querySelector("#submit");
+
+// Event listeners
+
+window.onload = () => {
+    myLibrary[0] = new Book("The Hobbit", "J.R.R Tolkien", 295, "Not Read");
+
+    // Populate initial library from array
+    for (const [index, book] of myLibrary.entries()) {
+        displayBooks(index, book);
+    }
+};
 
 inputSubmit.addEventListener("click", () => {
     addBookToLibrary();
 });
+
 
