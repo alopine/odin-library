@@ -43,13 +43,16 @@ function displayBook(index, book) {
         td.textContent = book[key];
     });
 
-    // Add delete button
-    const btn = document.createElement("button");
-    const td = tr.insertCell(-1);
-    btn.textContent = "Delete";
-    btn.setAttribute("data-bookID", index);
-    btn.addEventListener("click", deleteBook);
-    td.appendChild(btn);
+    // Add buttons
+    const buttons = [["Delete", deleteBook], ["Toggle Status", toggleRead]];
+    for (let i = 0; i < buttons.length; ++i) {
+        const btn = document.createElement("button");
+        const td = tr.insertCell(-1);
+        btn.textContent = buttons[i][0];
+        btn.setAttribute("data-bookID", index);
+        btn.addEventListener("click", buttons[i][1]);
+        td.appendChild(btn);
+    }
 }
 
 function deleteBook(evt) {
@@ -59,6 +62,23 @@ function deleteBook(evt) {
 
     // Remove from array
     myLibrary.splice(bookNum, 1);
+}
+
+function toggleRead(evt) {
+    // Update status in array
+    const bookNum = evt.currentTarget.getAttribute("data-bookID");
+    switch (true) {
+        case myLibrary[bookNum].read === "Read":
+            myLibrary[bookNum].read = "Not Read";
+            break;
+        case myLibrary[bookNum].read === "Not Read":
+            myLibrary[bookNum].read = "Read";
+            break;
+    }
+
+    // Update read status in table
+    const readCell = libraryTable.rows[bookNum].cells[3];
+    readCell.textContent = myLibrary[bookNum].read;
 }
 
 // Event listeners
