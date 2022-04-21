@@ -5,3 +5,31 @@
     margin: 0;
     padding: 0;
 }
+
+h1, table {
+    text-align: center;
+}
+
+body {
+    font-family: sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    row-gap: 1rem;
+}
+
+/* || Form */
+label {
+    font-weight: bold;
+}
+
+/* || Table */
+table, th, td {
+    width: 100%;
+    table-layout: fixed;
+}
+
+th, td {
+    padding: 0.5rem 1rem;
+}
