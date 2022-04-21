@@ -44,10 +44,10 @@ function displayBook(index, book) {
     });
 
     // Add buttons
+    const td = tr.insertCell(-1);
     const buttons = [["Delete", deleteBook], ["Toggle Status", toggleRead]];
     for (let i = 0; i < buttons.length; ++i) {
         const btn = document.createElement("button");
-        const td = tr.insertCell(-1);
         btn.textContent = buttons[i][0];
         btn.setAttribute("data-bookID", index);
         btn.addEventListener("click", buttons[i][1]);
