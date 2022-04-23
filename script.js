@@ -2,22 +2,24 @@
 let myLibrary = [];
 
 // Select page elements
-const inputTitle = document.querySelector("#title");
-const inputAuthor = document.querySelector("#author");
-const inputPages = document.querySelector("#pages");
-const inputRead = document.querySelector("#read");
-const inputSubmit = document.querySelector("#submit");
-const libraryTable = document.querySelector("#libraryTable");
+const inputTitle = document.getElementById("title");
+const inputAuthor = document.getElementById("author");
+const inputPages = document.getElementById("pages");
+const inputRead = document.getElementById("read");
+const inputSubmit = document.getElementById("submit");
+const libraryTable = document.getElementById("libraryTable");
 
-function Book(title, author, pages, read) {
-	this.title = title
-	this.author = author
-	this.pages = pages
-	this.read = read
-}
+class Book {
+    constructor(title, author, pages, read) {
+        this.title = title;
+        this.author = author;
+        this.pages = pages;
+        this.read = read;
+    }
 
-Book.prototype.info = function() {
-    return(`${this.title} by ${this.author}, ${this.pages} pages, ${this.read}`)
+    info() {
+        return(`${this.title} by ${this.author}, ${this.pages} pages, ${this.read}`);
+    }
 }
 
 function addBookToLibrary() {
@@ -49,7 +51,6 @@ function displayBook(index, book) {
     for (let i = 0; i < buttons.length; ++i) {
         const btn = document.createElement("button");
         btn.textContent = buttons[i][0];
-        btn.setAttribute("data-bookID", index);
         btn.addEventListener("click", buttons[i][1]);
         td.appendChild(btn);
     }
@@ -57,7 +58,8 @@ function displayBook(index, book) {
 
 function deleteBook(evt) {
     // Remove row in table
-    const bookNum = evt.currentTarget.getAttribute("data-bookID");
+    const buttonCell = evt.currentTarget.parentNode;
+    const bookNum = buttonCell.parentNode.rowIndex - 1;
     libraryTable.deleteRow(bookNum);
 
     // Remove from array
@@ -66,7 +68,8 @@ function deleteBook(evt) {
 
 function toggleRead(evt) {
     // Update status in array
-    const bookNum = evt.currentTarget.getAttribute("data-bookID");
+    const buttonCell = evt.currentTarget.parentNode;
+    const bookNum = buttonCell.parentNode.rowIndex - 1;
     switch (true) {
         case myLibrary[bookNum].read === "Read":
             myLibrary[bookNum].read = "Not Read";
