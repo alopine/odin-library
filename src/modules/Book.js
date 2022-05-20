@@ -50,10 +50,12 @@ export default class Book {
   }
 
   getStatus() {
-    return this.complete;
+    return this.status;
   }
 
   setStatus(arg) {
-    this.complete = arg;
+    if (arg) {
+      this.status = arg;
+    }
   }
 }
