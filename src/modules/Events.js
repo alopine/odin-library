@@ -13,19 +13,22 @@ export default class Events {
   static loadMain() {
     library.getAllBooks().forEach((book) => {
       Display.renderBook(book);
+      this.loadBookListeners(book.getID());
     });
   }
 
   static addBook() {
-    const submit = document.getElementById('addBookSubmitButton');
-    submit.addEventListener('click', () => {
+    const submitButton = document.getElementById('addBookSubmitButton');
+    submitButton.addEventListener('click', () => {
       const title = document.getElementById('addBookTitle').value;
       const author = document.getElementById('addBookAuthor').value;
       const pages = document.getElementById('addBookPages').value;
       const status = document.getElementById('addBookStatus').value;
       library.addBook(new Book(title, author, pages, status));
-      Display.renderBook(library.getAllBooks()[library.getAllBooks().length - 1]);
+      const newBook = library.getAllBooks()[library.getAllBooks().length - 1];
+      Display.renderBook(newBook);
       Storage.storeData(library);
+      this.loadBookListeners(newBook.getID());
     });
 
     // Select add book button and add listener
@@ -39,6 +42,12 @@ export default class Events {
     // run Storage.storeData(library)
   }
 
+  static loadBookListeners(bookID) {
+    this.toggleStatus(bookID);
+    this.deleteBook(bookID);
+    this.editBook(bookID);
+  }
+
   static toggleStatus(bookID) {
     // Select toggle button and add listener
     // run myLibrary.getBook and run setStatus
@@ -47,10 +56,13 @@ export default class Events {
   }
 
   static deleteBook(bookID) {
-    // Select delete button and add listener
-    // run myLibrary.deleteBook and pass in id
-    // run Display.deleteBook and pass in id
-    // run Storage.storeData(library)
+    const bookRow = document.getElementById(bookID);
+    const deleteButton = bookRow.querySelector('.deleteBookButton');
+    deleteButton.addEventListener('click', () => {
+      library.deleteBook(bookID);
+      Display.deleteBook(bookID);
+      Storage.storeData(library);
+    });
   }
 
   static editBook(bookID) {

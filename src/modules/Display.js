@@ -20,7 +20,7 @@ export default class Display {
   }
 
   static deleteBook(bookID) {
-    // Remove row based on book.getID()
+    document.getElementById(bookID).remove();
   }
 
   static updateBook(book) {
