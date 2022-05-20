@@ -1,7 +1,10 @@
 import 'normalize.css';
 import './styles.css';
+import Events from './modules/Events';
 
-// Initialize variables
+Events.loadApp();
+
+/* // Initialize variables
 const myLibrary = [];
 
 // Select page elements
@@ -12,18 +15,7 @@ const inputRead = document.getElementById('read');
 const inputSubmit = document.getElementById('submit');
 const libraryTable = document.getElementById('libraryTable');
 
-class Book {
-  constructor(title, author, pages, read) {
-    this.title = title;
-    this.author = author;
-    this.pages = pages;
-    this.read = read;
-  }
 
-  info() {
-    return (`${this.title} by ${this.author}, ${this.pages} pages, ${this.read}`);
-  }
-}
 
 function addBookToLibrary() {
   // Check if all input fields are filled
@@ -99,3 +91,4 @@ window.onload = () => {
 };
 
 inputSubmit.addEventListener('click', addBookToLibrary);
+ */
