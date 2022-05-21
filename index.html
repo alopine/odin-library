@@ -33,6 +33,7 @@
           name="bookTitle"
           id="bookTitle"
           autocomplete="off"
+          required
         />
         <label for="bookAuthor">Author</label>
         <input
@@ -40,6 +41,7 @@
           name="bookAuthor"
           id="bookAuthor"
           autocomplete="off"
+          required
         />
         <label for="bookPages"># of Pages</label>
         <input
@@ -47,13 +49,14 @@
           name="bookPages"
           id="bookPages"
           autocomplete="off"
+          required
         />
         <input type="radio" name="bookStatus" id="bookStatusTrue" value="true">
         <label for="bookStatusTrue">Read</label>
-        <input type="radio" name="bookStatus" id="bookStatusFalse" value="false">
+        <input type="radio" name="bookStatus" id="bookStatusFalse" value="false" checked>
         <label for="bookStatusFalse">Not Read</label>
-        <input type="text" name="bookDataID" id="bookDataID" class="hidden">
-        <button id="bookSubmit">Submit</button>
+        <input name="bookDataID" id="bookDataID" class="hidden">
+        <button id="bookSubmit" disabled>Submit</button>
         <button id="bookCancel">Cancel</button>
       </form>
     </section>
