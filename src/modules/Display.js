@@ -40,6 +40,9 @@ export default class Display {
     document.getElementById('formHeader').innerText = `${book ? 'Edit Book' : 'Add Book'}`;
     document.querySelector('main').classList.add('hidden');
     document.getElementById('bookFormSection').classList.remove('hidden');
+    document.getElementById('bookTitle').required = true;
+    document.getElementById('bookAuthor').required = true;
+    document.getElementById('bookPages').required = true;
     // If editing, populate fields with book data
     if (book) {
       document.getElementById('bookTitle').value = book.getTitle();
@@ -52,6 +55,9 @@ export default class Display {
   }
 
   static clearForm() {
+    document.getElementById('bookTitle').required = false;
+    document.getElementById('bookAuthor').required = false;
+    document.getElementById('bookPages').required = false;
     document.querySelector('main').classList.remove('hidden');
     document.getElementById('bookFormSection').classList.add('hidden');
     document.getElementById('bookForm').reset();

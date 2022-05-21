@@ -42,9 +42,6 @@ export default class Events {
         document.getElementById('bookSubmit').disabled = !valid.every((element) => element);
       });
     });
-    // Select all fields in edit form
-    // Add listener to each input field
-    // On input, check if any field is empty and toggle disabled on submit button
   }
 
   static submitForm() {
