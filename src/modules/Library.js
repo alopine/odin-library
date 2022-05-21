@@ -2,7 +2,7 @@ import Book from './Book';
 
 export default class Library {
   constructor() {
-    this.allBooks = [new Book('The Hobbit', 'J.R.R. Tolkien', 295, 'Not Read')];
+    this.allBooks = [new Book('The Hobbit', 'J.R.R. Tolkien', 295, false)];
   }
 
   getAllBooks() {

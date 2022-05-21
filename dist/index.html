@@ -11,6 +11,7 @@
   </head>
   <body>
     <section id="sidebar">
+      <h2>Add Book</h2>
       <form onsubmit="return false;" id="addBookForm">
         <label for="addBookTitle">Title</label>
         <input type="text" name="addBookTitle" id="addBookTitle" />
@@ -20,10 +21,25 @@
         <input type="number" name="addBookPages" id="addBookPages" />
         <label for="read">Status</label>
         <select name="addBookStatus" id="addBookStatus">
-          <option value="Read">Read</option>
-          <option value="Not Read">Not Read</option>
+          <option value="true">Read</option>
+          <option value="false">Not Read</option>
         </select>
         <button id="addBookSubmitButton">Submit</button>
+      </form>
+      <h2>Edit Book</h2>
+      <form onsubmit="return false;" id="editBookForm">
+        <label for="editBookTitle">Title</label>
+        <input type="text" name="editBookTitle" id="editBookTitle" />
+        <label for="editBookAuthor">Author</label>
+        <input type="text" name="editBookAuthor" id="editBookAuthor" />
+        <label for="editBookPages"># of Pages</label>
+        <input type="number" name="editBookPages" id="editBookPages" />
+        <label for="read">Status</label>
+        <select name="editBookStatus" id="editBookStatus">
+          <option value="true">Read</option>
+          <option value="false">Not Read</option>
+        </select>
+        <button id="editBookSubmitButton">Submit</button>
       </form>
     </section>
     <main>

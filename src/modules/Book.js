@@ -54,8 +54,6 @@ export default class Book {
   }
 
   setStatus(arg) {
-    if (arg) {
-      this.status = arg;
-    }
+    this.status = arg;
   }
 }

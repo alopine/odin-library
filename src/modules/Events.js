@@ -13,59 +13,58 @@ export default class Events {
   static loadMain() {
     library.getAllBooks().forEach((book) => {
       Display.renderBook(book);
-      this.loadBookListeners(book.getID());
+      this.loadBookListeners(book);
     });
   }
 
   static addBook() {
+    const form = document.getElementById('addBookForm');
     const submitButton = document.getElementById('addBookSubmitButton');
     submitButton.addEventListener('click', () => {
+      // Get book vales from form
       const title = document.getElementById('addBookTitle').value;
       const author = document.getElementById('addBookAuthor').value;
       const pages = document.getElementById('addBookPages').value;
       const status = document.getElementById('addBookStatus').value;
+      // Add new book to library
       library.addBook(new Book(title, author, pages, status));
+      // Render new book and add button listeners
       const newBook = library.getAllBooks()[library.getAllBooks().length - 1];
       Display.renderBook(newBook);
+      this.loadBookListeners(newBook);
+      // Reset form and save library to storage
+      form.reset();
       Storage.storeData(library);
-      this.loadBookListeners(newBook.getID());
     });
-
-    // Select add book button and add listener
-    // Select form elements values
-    // Run myLibrary.addBook
-    // Run Display.renderBook
-    // Get row id and pass in to following
-    // run this.toggleStatus
-    // run this.deleteBook
-    // run this.editBook
-    // run Storage.storeData(library)
   }
 
-  static loadBookListeners(bookID) {
-    this.toggleStatus(bookID);
-    this.deleteBook(bookID);
-    this.editBook(bookID);
-  }
-
-  static toggleStatus(bookID) {
-    // Select toggle button and add listener
-    // run myLibrary.getBook and run setStatus
-    // run Display.toggleStatus
-    // run Storage.storeData(library)
-  }
-
-  static deleteBook(bookID) {
+  static loadBookListeners(book) {
+    const bookID = book.getID();
     const bookRow = document.getElementById(bookID);
+    this.toggleStatus(book, bookID, bookRow);
+    this.deleteBook(bookID, bookRow);
+    this.editBook(book, bookID, bookRow);
+  }
+
+  static toggleStatus(book, bookID, bookRow) {
+    const toggleStatusButton = bookRow.querySelector('.toggleStatusButton');
+    toggleStatusButton.addEventListener('click', () => {
+      library.findBook(bookID).setStatus(!library.findBook(bookID).getStatus());
+      Display.toggleStatus(book, bookID);
+      Storage.storeData(library);
+    });
+  }
+
+  static deleteBook(bookID, bookRow) {
     const deleteButton = bookRow.querySelector('.deleteBookButton');
     deleteButton.addEventListener('click', () => {
       library.deleteBook(bookID);
-      Display.deleteBook(bookID);
+      Display.deleteBook(bookRow);
       Storage.storeData(library);
     });
   }
 
-  static editBook(bookID) {
+  static editBook(book, bookID, bookRow) {
     // Select edit button and add listener
     // run display.renderEditForm
     // run this.editInputListener()

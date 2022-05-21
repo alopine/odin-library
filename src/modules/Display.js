@@ -10,17 +10,17 @@ export default class Display {
       <td class="bookAuthorCell">${book.getAuthor()}</td>
       <td class="bookPagesCell">${book.getPages()}</td>
       <td class="bookStatusCell">
-        ${book.getStatus()}
+        ${book.getStatus() ? 'Read' : 'Not Read'}
       </td>
       <td class="bookOptionsCell">
-        <button class="toggleStatusButton>Toggle Status</button>
+        <button class="toggleStatusButton">Toggle Status</button>
         <button class="editBookButton">Edit</button>
         <button class="deleteBookButton">Delete</button>
       </td>`;
   }
 
-  static deleteBook(bookID) {
-    document.getElementById(bookID).remove();
+  static deleteBook(bookRow) {
+    bookRow.remove();
   }
 
   static updateBook(book) {
@@ -31,9 +31,9 @@ export default class Display {
     // update status
   }
 
-  static toggleStatus(book) {
-    // select row based on book.getID()
-    // update status
+  static toggleStatus(book, bookID) {
+    const bookStatusCell = document.getElementById(bookID).querySelector('.bookStatusCell');
+    bookStatusCell.innerHTML = `${book.getStatus() ? 'Read' : 'Not Read'}`;
   }
 
   static renderEditForm(book) {
