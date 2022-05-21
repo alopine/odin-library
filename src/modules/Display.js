@@ -24,11 +24,11 @@ export default class Display {
   }
 
   static updateBook(book) {
-    // Select row based on book.getID()
-    // update title
-    // update author
-    // update pages
-    // update status
+    const bookRow = document.getElementById(book.getID());
+    bookRow.querySelector('.bookTitleCell').innerHTML = `${book.getTitle()}`;
+    bookRow.querySelector('.bookAuthorCell').innerHTML = `${book.getAuthor()}`;
+    bookRow.querySelector('.bookPagesCell').innerHTML = `${book.getPages()}`;
+    bookRow.querySelector('.bookStatusCell').innerHTML = `${book.getStatus() ? 'Read' : 'Not Read'}`;
   }
 
   static toggleStatus(book, bookID) {
@@ -36,12 +36,23 @@ export default class Display {
     bookStatusCell.innerHTML = `${book.getStatus() ? 'Read' : 'Not Read'}`;
   }
 
-  static renderEditForm(book) {
-    // Insert edit form below book row and hide book row
-    // Edit form should have dataset.bookid = bookrow id
+  static renderForm(book) {
+    document.getElementById('formHeader').innerText = `${book ? 'Edit Book' : 'Add Book'}`;
+    document.querySelector('main').classList.add('hidden');
+    document.getElementById('bookFormSection').classList.remove('hidden');
+    // If editing, populate fields with book data
+    if (book) {
+      document.getElementById('bookTitle').value = book.getTitle();
+      document.getElementById('bookAuthor').value = book.getAuthor();
+      document.getElementById('bookPages').value = book.getPages();
+      document.getElementById(`${book.getStatus() ? 'bookStatusTrue' : 'bookStatusFalse'}`).checked = true;
+      document.getElementById('bookDataID').value = book.getID();
+    }
   }
 
-  static cancelEdit(book) {
-
+  static clearForm() {
+    document.querySelector('main').classList.remove('hidden');
+    document.getElementById('bookFormSection').classList.add('hidden');
+    document.getElementById('bookForm').reset();
   }
 }

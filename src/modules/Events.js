@@ -6,35 +6,71 @@ const library = Storage.checkData();
 
 export default class Events {
   static loadApp() {
-    this.loadMain();
-    this.addBook();
+    this.loadTable();
+    this.formListeners();
   }
 
-  static loadMain() {
+  static loadTable() {
     library.getAllBooks().forEach((book) => {
       Display.renderBook(book);
       this.loadBookListeners(book);
     });
   }
 
-  static addBook() {
-    const form = document.getElementById('addBookForm');
-    const submitButton = document.getElementById('addBookSubmitButton');
+  static formListeners() {
+    this.showAddForm();
+    this.formInputListener();
+    this.submitForm();
+    this.cancelForm();
+  }
+
+  static showAddForm() {
+    const addBookButton = document.getElementById('addBook');
+    addBookButton.addEventListener('click', () => {
+      Display.renderForm();
+    });
+  }
+
+  static formInputListener() {
+    // Select all fields in edit form
+    // Add listener to each input field
+    // On input, check if any field is empty and toggle disabled on submit button
+  }
+
+  static submitForm() {
+    const submitButton = document.getElementById('bookSubmit');
     submitButton.addEventListener('click', () => {
-      // Get book vales from form
-      const title = document.getElementById('addBookTitle').value;
-      const author = document.getElementById('addBookAuthor').value;
-      const pages = document.getElementById('addBookPages').value;
-      const status = document.getElementById('addBookStatus').value;
-      // Add new book to library
-      library.addBook(new Book(title, author, pages, status));
-      // Render new book and add button listeners
-      const newBook = library.getAllBooks()[library.getAllBooks().length - 1];
-      Display.renderBook(newBook);
-      this.loadBookListeners(newBook);
+      // Get book values from form
+      const title = document.getElementById('bookTitle').value;
+      const author = document.getElementById('bookAuthor').value;
+      const pages = document.getElementById('bookPages').value;
+      const status = document.querySelector('input[name="bookStatus"]:checked').value;
+      const dataID = document.getElementById('bookDataID').value;
+      if (document.getElementById('formHeader').innerText === 'Add Book') {
+        // Add new book to library
+        library.addBook(new Book(title, author, pages, status));
+        // Render new book and add button listeners
+        const newBook = library.getAllBooks()[library.getAllBooks().length - 1];
+        Display.renderBook(newBook);
+        this.loadBookListeners(newBook);
+      } else {
+        const book = library.findBook(dataID);
+        book.setTitle(title);
+        book.setAuthor(author);
+        book.setPages(pages);
+        book.setStatus(status);
+        Display.updateBook(book);
+      }
       // Reset form and save library to storage
-      form.reset();
+      Display.clearForm();
       Storage.storeData(library);
+    });
+  }
+
+  static cancelForm() {
+    const cancelButton = document.getElementById('bookCancel');
+    cancelButton.addEventListener('click', () => {
+      Display.clearForm();
     });
   }
 
@@ -43,7 +79,7 @@ export default class Events {
     const bookRow = document.getElementById(bookID);
     this.toggleStatus(book, bookID, bookRow);
     this.deleteBook(bookID, bookRow);
-    this.editBook(book, bookID, bookRow);
+    this.editBook(book, bookRow);
   }
 
   static toggleStatus(book, bookID, bookRow) {
@@ -64,25 +100,10 @@ export default class Events {
     });
   }
 
-  static editBook(book, bookID, bookRow) {
-    // Select edit button and add listener
-    // run display.renderEditForm
-    // run this.editInputListener()
-    // run this.cancelEdit
-    // run this.submitEdit()
-  }
-
-  static editInputListener() {
-    // Select all fields in edit form
-    // Add listener to each input field
-    // On input, check if any field is empty and toggle disabled on submit button
-  }
-
-  static cancelEdit() {
-    // Select cancel button and add listener
-  }
-
-  static submitEdit() {
-    // run Storage.storeData(library)
+  static editBook(book, bookRow) {
+    const editButton = bookRow.querySelector('.editBookButton');
+    editButton.addEventListener('click', () => {
+      Display.renderForm(book);
+    });
   }
 }
