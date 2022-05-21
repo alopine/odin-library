@@ -47,6 +47,7 @@ export default class Display {
       document.getElementById('bookPages').value = book.getPages();
       document.getElementById(`${book.getStatus() ? 'bookStatusTrue' : 'bookStatusFalse'}`).checked = true;
       document.getElementById('bookDataID').value = book.getID();
+      document.getElementById('bookSubmit').disabled = false;
     }
   }
 
@@ -54,5 +55,6 @@ export default class Display {
     document.querySelector('main').classList.remove('hidden');
     document.getElementById('bookFormSection').classList.add('hidden');
     document.getElementById('bookForm').reset();
+    document.getElementById('bookSubmit').disabled = true;
   }
 }

@@ -32,6 +32,16 @@ export default class Events {
   }
 
   static formInputListener() {
+    const inputFields = document.querySelectorAll('input[type="text"], input[type="number"]');
+    inputFields.forEach((field) => {
+      field.addEventListener('input', () => {
+        const valid = [];
+        inputFields.forEach((checkField) => {
+          valid.push(checkField.checkValidity());
+        });
+        document.getElementById('bookSubmit').disabled = !valid.every((element) => element);
+      });
+    });
     // Select all fields in edit form
     // Add listener to each input field
     // On input, check if any field is empty and toggle disabled on submit button
